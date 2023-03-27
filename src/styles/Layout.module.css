@@ -1,0 +1,192 @@
+.layout {
+  width: 100%;
+  color: var(--headerTextColor);
+  height: 100%;
+  display: flex;
+}
+
+.leftSideBar {
+  display: none;
+  background-color: var(--primary1);
+}
+
+.rightSideBar {
+  display: none;
+}
+.main {
+  flex: 2;
+  margin-bottom: 1rem;
+  background-color: var(--primary1);
+}
+
+.header {
+  height: 10%;
+  background-color: var(--primary1);
+}
+
+.main .header .topHeader {
+  height: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.topHeader .chatlogo,
+.topHeader .notification {
+  width: 30%;
+}
+
+.topHeader .notification {
+  text-align: end;
+}
+.main .header .toggleWrapper {
+  padding: 0 1rem;
+  height: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.toggleBtn {
+  outline: none;
+  border: none;
+  background-color: var(--primary1);
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.toggleBtn:hover {
+  background-color: gray;
+  opacity: 0.5;
+  border-radius: 0.2rem;
+}
+
+.header .isConnected {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.indicator {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+}
+
+.toggleWraper {
+  display: flex;
+  justify-content: space-around;
+}
+.inactive {
+  background-color: var(--inactiveColor);
+}
+
+.active {
+  background-color: var(--activeColor);
+}
+.main .header {
+  height: 15%;
+}
+
+.main .chatWrapper {
+  height: 85%;
+}
+.toggleWraper {
+  position: relative;
+}
+
+#userInfo {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.roomsBox,
+.usersBox {
+  border-radius: 2rem;
+  position: absolute;
+  width: 100vw;
+  height: 70vh;
+  background-color: var(--primary1);
+  display: flex;
+  flex-direction: column;
+  top: 14vh;
+  z-index: 2;
+}
+
+.roomsBox {
+  left: 0px;
+}
+
+.usersBox {
+  right: 0px;
+}
+.title {
+  height: 10%;
+}
+
+.roomsBox .roomsWrapper,
+.usersBox .usersWrapper {
+  height: 80%;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.btnWrapper {
+  display: block;
+  height: 10%;
+  text-align: center;
+}
+
+.createRoomBtn,
+.leaveRoomBtn {
+  padding: 0.5rem 1rem;
+  outline: none;
+  border: 2px solid var(--messageBg);
+  border-radius: 1rem;
+  background-color: var(--primary1);
+  color: var(--headerTextColor);
+  cursor: pointer;
+}
+
+@media screen and (min-width: 900px) {
+  .leftSideBar {
+    display: block;
+    flex: 1;
+  }
+
+  .rightSideBar {
+    display: block;
+    flex: 1;
+    background-color: var(--primary1);
+  }
+
+  .main .header {
+    height: 10%;
+  }
+
+  main .chatWrapper {
+    height: 90%;
+  }
+
+  .main .header .toggleWrapper {
+    display: none;
+  }
+
+  .rightSideBar .header .notification {
+    display: inline-block;
+  }
+  .leftSideBar .header .chatlogo {
+    display: inline-block;
+  }
+  .topHeader .chatlogo,
+  .topHeader .notification {
+    display: none;
+  }
+
+  .roomsBox .usersBox {
+    display: none;
+  }
+}

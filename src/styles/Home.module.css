@@ -1,0 +1,48 @@
+.homePage {
+  width: 100%;
+  height: 200%;
+  display: flex;
+  flex-direction: column;
+}
+
+.leftGrid {
+  flex: 1;
+  background-color: var(--primary2);
+}
+
+.rightGrid {
+  flex: 1;
+  background-color: var(--messageBg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign_up_wrapper,
+.sign_in_wrapper {
+  width: 100%;
+  height: 90%;
+  padding: 2rem;
+}
+
+.title {
+  display: flex;
+  color: var(--headerTextColor);
+  text-align: center;
+  flex-direction: column;
+  justify-items: center;
+}
+
+@media screen and (min-width: 1000px) {
+  .homePage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .sign_up_wrapper,
+  .sign_in_wrapper {
+    width: 80%;
+  }
+}

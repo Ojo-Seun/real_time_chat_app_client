@@ -1,0 +1,46 @@
+.chat {
+  height: 100%;
+  border-radius: 2rem;
+  background-color: var(--primary2);
+  padding: 1rem;
+}
+
+.chat .messages {
+  height: 90%;
+}
+
+.chat .inputWrapper {
+  position: relative;
+  height: 10%;
+  padding: 0rem 1rem;
+  background-color: var(--primary1);
+  border-radius: 2rem;
+  display: flex;
+  justify-items: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.messageInput {
+  width: 80%;
+  height: 80%;
+  padding: 0.5rem;
+  background-color: var(--messageBg);
+  border-radius: 2rem;
+  outline: none;
+  border: none;
+  color: white;
+}
+
+.messages {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+#sendBtn {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 1000px) {
+}

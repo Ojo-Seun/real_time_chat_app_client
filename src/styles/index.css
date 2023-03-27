@@ -1,0 +1,42 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+:root {
+  --primary1: #040a20;
+  --primary2: #161d34;
+  --activeColor: #4285f4;
+  --inactiveColor: #5e647c;
+  --messageBg: #1e2745;
+  --headerTextColor: aqua;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  outline: none;
+  border: none;
+}
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 300px) {
+  .html,
+  body {
+    width: 400px;
+    height: 100vh;
+    overflow-x: scroll;
+  }
+}

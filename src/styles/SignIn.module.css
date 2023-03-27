@@ -1,0 +1,109 @@
+.sign_in_form {
+  width: 100%;
+  height: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.inputWrapper label {
+  color: var(--inactiveColor);
+}
+
+.inputWrapper input {
+  display: block;
+  outline: none;
+  border: 2px solid var(--headerTextColor);
+  padding: 1rem 0.5rem;
+  color: white;
+}
+
+#email {
+  width: 40%;
+  border-radius: 2rem;
+}
+
+.inputWrapper div {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--headerTextColor);
+  background-color: var(--primary1);
+  color: white;
+  border-radius: 2rem;
+  justify-content: space-between;
+  padding-right: 0.5rem;
+  transition: all 0.5s;
+}
+
+.inputWrapper div:hover {
+  margin-top: 1rem;
+  width: 50%;
+}
+
+.inputWrapper div i {
+  cursor: pointer;
+}
+
+#password {
+  outline: none;
+  border: none;
+  width: 80%;
+  color: white;
+}
+
+#email:valid,
+#password:valid {
+  background-color: white;
+  color: var(--activeColor);
+}
+
+#email:invalid,
+#password:invalid {
+  background-color: var(--primary1);
+}
+
+#email:focus {
+  margin-top: 1rem;
+  width: 50%;
+  transition: all 1s;
+}
+
+.sign_in_form p {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sign_in_form p span {
+  color: var(--headerTextColor);
+}
+
+.btn {
+  outline: none;
+  border: 3px solid var(--headerTextColor);
+  border-radius: 1rem;
+  color: var(--headerTextColor);
+  background-color: var(--primary2);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.btn:hover {
+  border: 3.1px solid rgba(00, 255, 255, 0.5);
+}
+
+@media screen and (min-width: 1000px) {
+  .sign_in_form {
+    width: 80%;
+  }
+}
