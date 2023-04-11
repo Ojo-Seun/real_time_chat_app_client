@@ -1,21 +1,37 @@
 .message {
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding: 1rem;
 }
 
 .yourMessage {
+  position: relative;
   background-color: var(--messageBg);
   float: right;
+  overflow: visible;
 }
 
-.message::after {
-  content: url(../../public/rightTooTip.png);
+.yourMessage::after {
+  position: absolute;
+  content: url(../../public/rightToolTip.png);
+  right: -15px;
+  top: -9px;
   width: 32px;
   height: 32px;
 }
 .othersMessage {
+  position: relative;
+  overflow: visible;
   background-color: var(--primary1);
   float: left;
+}
+
+.othersMessage::before {
+  position: absolute;
+  content: url(../../public/leftToolTip.png);
+  left: -15px;
+  top: -6px;
+  width: 32px;
+  height: 32px;
 }
 
 .wrapper1 {
@@ -26,7 +42,8 @@
   position: relative;
 }
 .img {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
 }
 
 .sender {
@@ -54,6 +71,8 @@
 }
 .date {
   text-align: center;
+  color: var(--inactiveColor);
+  font-size: 12px;
 }
 
 @media screen and (min-width: 1000px) {

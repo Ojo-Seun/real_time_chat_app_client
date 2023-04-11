@@ -11,7 +11,7 @@ function Message({ message }: Props) {
   const { createdAt } = message;
   const {
     state: {
-      userInfo: { userId },
+      userInfo: { userId, username },
     },
   } = useContext(Store);
 

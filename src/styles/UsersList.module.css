@@ -1,0 +1,38 @@
+.users {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.users li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.users li div img {
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+.users li div span {
+  color: white;
+}
+.users li {
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+
+.users li button {
+  outline: none;
+  padding: 0.5rem;
+  border: 5px solid var(--messageBg);
+  background-color: var(--primary1);
+  border-radius: 1rem;
+  color: var(--headerColor);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.users li button:hover {
+  opacity: 0.5;
+}

@@ -5,12 +5,8 @@
   display: flex;
 }
 
+.rightSideBar,
 .leftSideBar {
-  display: none;
-  background-color: var(--primary1);
-}
-
-.rightSideBar {
   display: none;
 }
 .main {
@@ -23,8 +19,10 @@
   height: 10%;
   background-color: var(--primary1);
 }
-
-.main .header .topHeader {
+.deskTopTopHeader {
+  display: none;
+}
+.main .header .mobileTopHeader {
   height: 60%;
   display: flex;
   justify-content: space-between;
@@ -32,13 +30,34 @@
   padding: 0 0.5rem;
 }
 
-.topHeader .chatlogo,
-.topHeader .notification {
+.mobileTopHeader .chatlogo,
+.mobileTopHeader .notification {
   width: 30%;
 }
 
-.topHeader .notification {
+.mobileTopHeader .notification {
   text-align: end;
+}
+.mobileTopHeader .notification span {
+  position: fixed;
+  display: inline-block;
+  padding: 1rem;
+  background-color: var(--primary2);
+  border-radius: 1rem;
+  color: var(--activeColor);
+  top: 10px;
+  right: 3rem;
+  overflow: visible;
+}
+
+.notification span::after {
+  position: absolute;
+  content: "";
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--primary2);
+  right: -18px;
+  top: 30%;
 }
 .main .header .toggleWrapper {
   padding: 0 1rem;
@@ -58,9 +77,13 @@
 .toggleBtn:hover {
   background-color: gray;
   opacity: 0.5;
-  border-radius: 0.2rem;
+  border-radius: 0.5rem;
 }
 
+#userInfo img {
+  border: 3px solid var(--messageBg);
+  object-fit: cover;
+}
 .header .isConnected {
   width: 30%;
   display: flex;
@@ -75,10 +98,6 @@
   border-radius: 50%;
 }
 
-.toggleWraper {
-  display: flex;
-  justify-content: space-around;
-}
 .inactive {
   background-color: var(--inactiveColor);
 }
@@ -92,9 +111,6 @@
 
 .main .chatWrapper {
   height: 85%;
-}
-.toggleWraper {
-  position: relative;
 }
 
 #userInfo {
@@ -114,6 +130,7 @@
   flex-direction: column;
   top: 14vh;
   z-index: 2;
+  padding: 1rem;
 }
 
 .roomsBox {
@@ -123,51 +140,43 @@
 .usersBox {
   right: 0px;
 }
-.title {
-  height: 10%;
-}
 
-.roomsBox .roomsWrapper,
-.usersBox .usersWrapper {
-  height: 80%;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-}
-
-.btnWrapper {
-  display: block;
-  height: 10%;
-  text-align: center;
-}
-
-.createRoomBtn,
-.leaveRoomBtn {
+.createRoomBtn {
   padding: 0.5rem 1rem;
   outline: none;
-  border: 2px solid var(--messageBg);
+  border: 1px solid var(--messageBg);
   border-radius: 1rem;
   background-color: var(--primary1);
   color: var(--headerTextColor);
   cursor: pointer;
 }
 
-@media screen and (min-width: 900px) {
-  .leftSideBar {
-    display: block;
-    flex: 1;
-  }
+.rightSideBar .users,
+.leftSideBar .chatInfo {
+  padding: 1rem;
+}
 
+.dropDownOpener {
+  padding: 1rem;
+}
+
+.dropDownOpener span {
+  color: var(--inactiveColor);
+}
+
+@media screen and (min-width: 900px) {
+  .leftSideBar,
   .rightSideBar {
     display: block;
     flex: 1;
-    background-color: var(--primary1);
+    padding: 0.5rem 1rem;
   }
 
   .main .header {
     height: 10%;
   }
 
-  main .chatWrapper {
+  .main .chatWrapper {
     height: 90%;
   }
 
@@ -181,11 +190,34 @@
   .leftSideBar .header .chatlogo {
     display: inline-block;
   }
-  .topHeader .chatlogo,
-  .topHeader .notification {
+  .main .header .mobileTopHeader {
     display: none;
   }
 
+  .deskTopTopHeader {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+  }
+
+  .rightSideBar .notification span {
+    position: fixed;
+    display: inline-block;
+    padding: 1rem;
+    background-color: var(--primary2);
+    border-radius: 1rem;
+    color: var(--activeColor);
+    top: 10px;
+    right: 22rem;
+    overflow: visible;
+  }
+
+  .deskTopTopHeader img {
+    border: 3px solid var(--messageBg);
+    object-fit: cover;
+  }
   .roomsBox .usersBox {
     display: none;
   }

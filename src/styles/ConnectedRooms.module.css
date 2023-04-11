@@ -1,0 +1,7 @@
+.dropDownOpener {
+  padding: 1rem;
+}
+
+.dropDownOpener span {
+  color: var(--inactiveColor);
+}

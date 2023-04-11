@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Suspense, lazy, useContext } from "react";
-import socket from "./utils/socket";
 import "./styles//App.css";
 import { RouteVariant } from "./pages/Home";
 import { Routes, Route, useLocation } from "react-router-dom";

@@ -1,0 +1,40 @@
+.allUsers {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  transition: all 0.5s;
+}
+
+.allUsers li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.allUsers li div img {
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.allUsers li {
+  background-color: var(--inactiveColor);
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+
+.allUsers li button {
+  outline: none;
+  padding: 0.5rem;
+  border: 5px solid var(--messageBg);
+  background-color: var(--primary1);
+  border-radius: 1rem;
+  color: var(--headerColor);
+}
+
+.dropDownOpener {
+  padding: 1rem;
+}
+
+.dropDownOpener span {
+  color: var(--inactiveColor);
+}

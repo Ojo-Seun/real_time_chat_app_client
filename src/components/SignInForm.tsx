@@ -5,8 +5,8 @@ import validateInput from "../utils/validateInput"
 import styles from "../styles/SignIn.module.css"
 import { errMessage } from "../utils/errMessages"
 import { Store } from "./StoreProvider"
-import openPwd from "../icons/openPwd.svg"
-import closePwd from "../icons/closePwd.svg"
+import openPwd from "../icons/openPwd.png"
+import closePwd from "../icons/closePwd.png"
 
 interface Props {
   setShowSignUpPage: (e: boolean) => void

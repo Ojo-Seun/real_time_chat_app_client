@@ -1,0 +1,51 @@
+.rooms {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow: visible;
+}
+
+.rooms li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: visible;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--primary2);
+}
+
+.rooms li div img {
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.rooms li div span {
+  color: white;
+  margin-left: 5px;
+}
+
+.rooms li button {
+  outline: none;
+  padding: 0.5rem;
+  border: 5px solid var(--messageBg);
+  background-color: var(--primary1);
+  border-radius: 1rem;
+  color: var(--headerColor);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rooms li button:hover {
+  opacity: 0.5;
+}
+.msgCounter {
+  position: absolute;
+  background-color: var(--primary1);
+  border-radius: 50%;
+  top: -18px;
+  right: 0px;
+  font-size: 10px;
+  padding: 0.5rem;
+}

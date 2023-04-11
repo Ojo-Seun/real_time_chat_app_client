@@ -1,14 +1,14 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useContext, useEffect, useRef, useState } from "react";
-import styles from "../styles/SignUp.module.css";
-import validateInput from "../utils/validateInput";
-import { errMessage } from "../utils/errMessages";
-import { Store } from "./StoreProvider";
-import axios from "axios";
-import imageCompressor from "browser-image-compression";
-import openPwd from "../icons/openPwd.svg";
-import closePwd from "../icons/closePwd.svg";
-import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion"
+import { useContext, useEffect, useRef, useState } from "react"
+import styles from "../styles/SignUp.module.css"
+import validateInput from "../utils/validateInput"
+import { errMessage } from "../utils/errMessages"
+import { Store } from "./StoreProvider"
+import axios from "axios"
+import imageCompressor from "browser-image-compression"
+import openPwd from "../icons/openPwd.png"
+import closePwd from "../icons/closePwd.png"
+import { useNavigate } from "react-router-dom"
 
 const InputsVariants = {
   initial: { opacity: 0 },
@@ -17,89 +17,89 @@ const InputsVariants = {
     transition: { duration: 1 },
   },
   exit: { opacity: 0 },
-};
+}
 
 interface Props {
-  setShowSignUpPage: (e: boolean) => void;
-  image: string;
-  setImage: (e: string) => void;
+  setShowSignUpPage: (e: boolean) => void
+  image: string
+  setImage: (e: string) => void
 }
 
 function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
-  const [err, setErr] = useState({ showErr: false, message: "" });
-  const [showPwd, setShowPwd] = useState(false);
-  const [inputs, setInputs] = useState<{ [key: string]: string }>({ username: "", email: "", password: "", confirmPassword: "" });
-  const { dispatch } = useContext(Store);
+  const [err, setErr] = useState({ showErr: false, message: "" })
+  const [showPwd, setShowPwd] = useState(false)
+  const [inputs, setInputs] = useState<{ [key: string]: string }>({ username: "", email: "", password: "", confirmPassword: "" })
+  const { dispatch } = useContext(Store)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const name = e.target.name
+    const value = e.target.value
 
-    setInputs((prev) => ({ ...prev, [name]: value }));
-    const valid = validateInput(name, value);
+    setInputs((prev) => ({ ...prev, [name]: value }))
+    const valid = validateInput(name, value)
     if (!valid) {
-      setErr({ showErr: true, message: errMessage.get(name) as string });
-      return;
+      setErr({ showErr: true, message: errMessage.get(name) as string })
+      return
     }
-    setErr({ showErr: false, message: "" });
-  };
+    setErr({ showErr: false, message: "" })
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (inputs.password !== inputs.confirmPassword) {
-      setErr({ showErr: true, message: errMessage.get("confirmPassword") as string });
-      return;
+      setErr({ showErr: true, message: errMessage.get("confirmPassword") as string })
+      return
     }
 
     for (let key in inputs) {
-      const valid = validateInput(key, inputs[key]);
+      const valid = validateInput(key, inputs[key])
 
       if (!valid) {
-        setErr({ showErr: true, message: errMessage.get("all") as string });
-        return;
+        setErr({ showErr: true, message: errMessage.get("all") as string })
+        return
       }
     }
 
-    const { confirmPassword, ...rest } = inputs;
-    const userInfo = { ...rest, image };
+    const { confirmPassword, ...rest } = inputs
+    const userInfo = { ...rest, image }
     axios
       .post("http://localhost:5000/api/sign_up", { userInfo })
       .then((res) => {
-        dispatch({ type: "SIGNIN", payload: { ...res.data } });
+        dispatch({ type: "SIGNIN", payload: { ...res.data } })
       })
       .catch((err) => {
-        const Err = err.response ? err.response.data.message : err.message;
-        setErr({ showErr: true, message: Err });
-      });
-  };
+        const Err = err.response ? err.response.data.message : err.message
+        setErr({ showErr: true, message: Err })
+      })
+  }
 
   const readImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
+    const file = e.target.files && e.target.files[0]
 
     if (file && validateInput("image", file.name)) {
-      setErr({ showErr: false, message: "" });
+      setErr({ showErr: false, message: "" })
 
       const options = {
         maxSizeMB: 1,
         maxWidthOrHeight: 400,
         useWebWorker: true,
-      };
+      }
 
       // Compress image
       imageCompressor(file!, options).then((compressedImage) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(compressedImage);
+        const reader = new FileReader()
+        reader.readAsDataURL(compressedImage)
         reader.addEventListener("load", (e) => {
-          const result = e.target?.result;
-          setImage(result as string);
-        });
-      });
+          const result = e.target?.result
+          setImage(result as string)
+        })
+      })
     } else {
-      setErr({ showErr: true, message: errMessage.get("image") as string });
-      return;
+      setErr({ showErr: true, message: errMessage.get("image") as string })
+      return
     }
-  };
+  }
 
   return (
     <motion.form onSubmit={handleSubmit} className={styles.sign_up_form} layout>
@@ -179,7 +179,7 @@ function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
         </button>
       </div>
     </motion.form>
-  );
+  )
 }
 
-export default SignUpForm;
+export default SignUpForm
