@@ -2,18 +2,20 @@ import { createContext, useReducer, Dispatch } from "react"
 import type { OnlineUser, RoomTypes, UserTypes } from "../utils/types"
 
 const initialValue: StateTypes = {
-  userInfo: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")!) : {},
+  userInfo: sessionStorage.getItem("userInfo") ? JSON.parse(sessionStorage.getItem("userInfo")!) : {},
   isConnected: false,
   alert: { message: "" },
   allRooms: [],
   allUsers: [],
   roomsConnected: [],
   onlineUsers: [],
+  joinAroom: (roomName: string, userId: string) => void {},
+  leaveAroom: (roomName: string, userId: string) => void {},
 }
 export const Store = createContext({ state: initialValue, dispatch: {} as Dispatch<ActionTypes> })
 
 interface ActionTypes {
-  type: "SIGNIN" | "SIGNOUT" | "CONNECTED" | "ALERT" | "ALL_ROOMS" | "ALL_USERS" | "ONLINE_USERS" | "ROOMS_CONNECTED"
+  type: "SIGNIN" | "SIGNOUT" | "CONNECTED" | "ALERT" | "ALL_ROOMS" | "ALL_USERS" | "ONLINE_USERS" | "ROOMS_CONNECTED" | "JOIN_A_ROOM" | "LEAVE_A_ROOM"
   payload?: any
 }
 
@@ -25,6 +27,8 @@ interface StateTypes {
   roomsConnected: RoomTypes[]
   allUsers: UserTypes[]
   onlineUsers: OnlineUser[]
+  joinAroom: (roomName: string, userId: string) => void
+  leaveAroom: (roomName: string, userId: string) => void
 }
 
 interface Props {
@@ -34,10 +38,10 @@ interface Props {
 const reducer = (state: StateTypes, action: ActionTypes) => {
   switch (action.type) {
     case "SIGNIN":
-      localStorage.setItem("userInfo", JSON.stringify(action.payload))
+      sessionStorage.setItem("userInfo", JSON.stringify(action.payload))
       return { ...state, userInfo: action.payload }
     case "SIGNOUT":
-      localStorage.removeItem("userInfo")
+      sessionStorage.removeItem("userInfo")
       return { ...state, userInfo: {} }
     case "CONNECTED":
       return { ...state, isConnected: action.payload }
@@ -51,6 +55,10 @@ const reducer = (state: StateTypes, action: ActionTypes) => {
       return { ...state, roomsConnected: action.payload }
     case "ONLINE_USERS":
       return { ...state, onlineUsers: action.payload }
+    case "JOIN_A_ROOM":
+      return { ...state, joinAroom: action.payload }
+    case "LEAVE_A_ROOM":
+      return { ...state, leaveAroom: action.payload }
     default:
       return state
   }

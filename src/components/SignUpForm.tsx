@@ -28,7 +28,7 @@ interface Props {
 function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
   const [err, setErr] = useState({ showErr: false, message: "" })
   const [showPwd, setShowPwd] = useState(false)
-  const [inputs, setInputs] = useState<{ [key: string]: string }>({ username: "", email: "", password: "", confirmPassword: "" })
+  const [inputs, setInputs] = useState<{ [key: string]: string }>({ name: "", email: "", password: "", confirmPassword: "" })
   const { dispatch } = useContext(Store)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,9 +62,9 @@ function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
     }
 
     const { confirmPassword, ...rest } = inputs
-    const userInfo = { ...rest, image }
+    const userInfo = { ...rest, username: `@${inputs.name.toLowerCase()}`, image }
     axios
-      .post("http://localhost:5000/api/sign_up", { userInfo })
+      .post("http://localhost:5000/api/sign_up", { ...userInfo })
       .then((res) => {
         dispatch({ type: "SIGNIN", payload: { ...res.data } })
       })
@@ -102,15 +102,15 @@ function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
   }
 
   return (
-    <motion.form onSubmit={handleSubmit} className={styles.sign_up_form} layout>
+    <motion.form onSubmit={handleSubmit} className={styles.sign_up_form}>
       {err.showErr && (
         <motion.pre style={{ color: "red", textAlign: "center", fontSize: 10 }} animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } }} initial={{ opacity: 0 }}>
           {err.message}
         </motion.pre>
       )}
       <div className={styles.inputWrapper}>
-        <label htmlFor="username">User Name</label>
-        <input pattern="^[A-Za-z0-9]{3,20}$" id={styles.text} placeholder="Alphabet Only" onChange={handleChange} type="text" value={inputs.username} name="username" required />
+        <label htmlFor="name">Name</label>
+        <input pattern="^[A-Za-z0-9]{3,20}$" id={styles.text} placeholder="Alphabet Only" onChange={handleChange} type="text" value={inputs.name} name="name" required />
       </div>
 
       <div className={styles.inputWrapper}>

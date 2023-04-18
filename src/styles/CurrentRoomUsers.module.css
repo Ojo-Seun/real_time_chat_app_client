@@ -1,0 +1,40 @@
+.room_users {
+  height: 80%;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room_users li {
+  width: 110px;
+  height: 80%;
+  border-radius: 1rem;
+  display: flex;
+  margin: 0 0.5rem;
+}
+#wrapper {
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#username {
+  color: white;
+}
+#online {
+  color: var(--activeColor);
+  overflow: visible;
+  font-size: 12px;
+}
+#offline {
+  color: var(--inactiveColor);
+  overflow: visible;
+  font-size: 12px;
+}
+.room_users li img {
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 3px solid var(--primary2);
+}

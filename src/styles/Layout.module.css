@@ -116,8 +116,13 @@
 #userInfo {
   width: 50%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+}
+
+#userInfo span {
+  align-self: last baseline;
+  margin-left: 1px;
 }
 .roomsBox,
 .usersBox {

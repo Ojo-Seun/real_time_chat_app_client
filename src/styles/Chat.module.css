@@ -5,8 +5,16 @@
   padding: 1rem;
 }
 
+.roomUsers {
+  height: 20%;
+  background-color: var(--primary1);
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .chat .messages {
-  height: 90%;
+  height: 70%;
 }
 
 .chat .inputWrapper {
@@ -35,6 +43,22 @@
 .messages {
   overflow-y: scroll;
   scroll-behavior: smooth;
+}
+
+.messages div span:last-child {
+  transition: all 0.5s;
+  animation: renderAnimation 0.5s linear 1;
+}
+
+@keyframes renderAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
 #sendBtn {

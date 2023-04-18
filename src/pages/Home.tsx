@@ -1,10 +1,10 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SignInForm from "../components/SignInForm";
-import SignUpForm from "../components/SignUpForm";
-import { Store } from "../components/StoreProvider";
-import styles from "../styles/Home.module.css";
+import { AnimatePresence, motion } from "framer-motion"
+import { useContext, useEffect, useLayoutEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import SignInForm from "../components/SignInForm"
+import SignUpForm from "../components/SignUpForm"
+import { Store } from "../components/StoreProvider"
+import styles from "../styles/Home.module.css"
 
 const FormVariants = {
   initial: { opacity: 0 },
@@ -13,7 +13,7 @@ const FormVariants = {
     transition: { duration: 1 },
   },
   exit: { opacity: 0 },
-};
+}
 
 export const RouteVariant = {
   initial: {
@@ -29,23 +29,23 @@ export const RouteVariant = {
     y: "2vh",
     opacity: 0,
   },
-};
+}
 
 function Home() {
-  const navigate = useNavigate();
-  const [showSignUpPage, setShowSignUpPAge] = useState(false);
-  const [image, setImage] = useState("");
+  const navigate = useNavigate()
+  const [showSignUpPage, setShowSignUpPAge] = useState(false)
+  const [image, setImage] = useState("")
   const {
     state: {
       userInfo: { token },
     },
-  } = useContext(Store);
+  } = useContext(Store)
 
   useEffect(() => {
     if (token) {
-      navigate("/chat");
+      navigate("/chat")
     }
-  }, [token, navigate]);
+  }, [token, navigate])
 
   return (
     <motion.div variants={RouteVariant} initial="initial" animate="animate" exit="exit" className={styles.homePage}>
@@ -55,7 +55,7 @@ function Home() {
           <div className={styles.sign_up_wrapper}>
             <motion.p className={styles.title}>
               <span>Sign Up To Start Chating</span>
-              {image && <img src={image} style={{ borderRadius: "50%" }} alt="Your Pics" width={50} height={50} />}
+              {image && <img src={image} style={{ borderRadius: "50%", objectFit: "cover" }} alt="Your Pics" width={50} height={50} />}
             </motion.p>
             <SignUpForm image={image} setImage={setImage} setShowSignUpPage={setShowSignUpPAge} />
           </div>
@@ -67,7 +67,7 @@ function Home() {
         )}
       </div>
     </motion.div>
-  );
+  )
 }
 
-export default Home;
+export default Home

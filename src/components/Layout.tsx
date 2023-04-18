@@ -7,8 +7,8 @@ import OpenIcon from "./OpenIcon"
 import CloseIcon from "./CloseIcon"
 import { Store } from "./StoreProvider"
 import ConnectedRooms from "./ConnectedRooms"
-import AllRooms from "./AllRooms"
-import AllUsers from "./AllUsers"
+import AvailableRooms from "./AvailableRooms"
+import OfflineUsers from "./OfflineUsers"
 import OnlineUsers from "./OnlineUsers"
 
 interface Props {
@@ -111,8 +111,8 @@ function Layout({ children }: Props) {
         </div>
 
         <div className={styles.chatInfo}>
-          <ConnectedRooms connectedRooms={roomsConnected} />
-          <AllRooms allRooms={allRooms} />
+          <ConnectedRooms />
+          <AvailableRooms />
         </div>
       </motion.aside>
       {/*Desktop  leftSideBar*/}
@@ -126,7 +126,7 @@ function Layout({ children }: Props) {
 
             <div className={styles.isConnected}>
               <span className={`${styles.indicator} ${isConnected ? styles.active : styles.inactive}`}></span>
-              <span>{isConnected ? "Connected" : "Disconnected"}</span>
+              <span>{isConnected ? "Online" : "Offline"}</span>
             </div>
 
             <div className={styles.notification}>
@@ -145,9 +145,9 @@ function Layout({ children }: Props) {
             <img width={40} height={40} style={{ borderRadius: ".5rem" }} src={userInfo.image} alt="Your pics" />
             <div className={styles.isConnected}>
               <span className={`${styles.indicator} ${isConnected ? styles.active : styles.inactive}`}></span>
-              <span>{isConnected ? "Connected" : "Disconnected"}</span>
+              <span>{isConnected ? "Online" : "Offline"}</span>
             </div>
-            <span style={{ textTransform: "capitalize" }}>{userInfo.username}</span>
+            <span style={{ textTransform: "capitalize", color: "white" }}>{userInfo.name}</span>
           </div>
           {/* Desktop-> deskTopTopHeader*/}
 
@@ -159,8 +159,8 @@ function Layout({ children }: Props) {
             <AnimatePresence>
               {leftToggleBtn.roomsBox && (
                 <motion.div variants={RoomsBoxVariant} initial="initial" animate="animate" exit="exit" className={styles.roomsBox}>
-                  <ConnectedRooms connectedRooms={roomsConnected} />
-                  <AllRooms allRooms={allRooms} />
+                  <ConnectedRooms />
+                  <AvailableRooms />
                   <button type="button" className={styles.createRoomBtn}>
                     Create New Room
                   </button>
@@ -169,7 +169,7 @@ function Layout({ children }: Props) {
             </AnimatePresence>
             <div id={styles.userInfo}>
               <img width={40} height={40} style={{ borderRadius: "50%" }} src={userInfo.image} alt="Your pics" />
-              <span style={{ textTransform: "capitalize" }}>{userInfo.username}</span>
+              <span style={{ textTransform: "capitalize", color: "white" }}>{userInfo.name}</span>
             </div>
             <button onClick={toggleRightBtn} className={styles.toggleBtn}>
               {rightToggleBtn.openBtn ? <OpenIcon /> : <CloseIcon />}
@@ -177,8 +177,8 @@ function Layout({ children }: Props) {
             <AnimatePresence>
               {rightToggleBtn.usersBox && (
                 <motion.div variants={UsersBoxVariant} initial="initial" animate="animate" exit="exit" className={styles.usersBox}>
-                  <OnlineUsers onlineUsers={onlineUsers} />
-                  <AllUsers allUsers={allUsers} />
+                  <OnlineUsers />
+                  <OfflineUsers />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -200,8 +200,8 @@ function Layout({ children }: Props) {
           </div>
         </div>
         <div className={styles.users}>
-          <OnlineUsers onlineUsers={onlineUsers} />
-          <AllUsers allUsers={allUsers} />
+          <OnlineUsers />
+          <OfflineUsers />
         </div>
       </motion.aside>
       {/* Desktop rightSideBar*/}

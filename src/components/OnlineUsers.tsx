@@ -1,15 +1,14 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import styles from "../styles/OnlineUsers.module.css"
 import ToggleArrow from "./ToggleArrow"
 import { UserTypes } from "../utils/types"
 import UsersList from "./UsersLIst"
+import { Store } from "./StoreProvider"
 
-interface Props {
-  onlineUsers: UserTypes[]
-}
-
-function OnlineUsers({ onlineUsers }: Props) {
+function OnlineUsers() {
   const [openList, setOpenList] = useState(true)
+  const { state } = useContext(Store)
+  const { onlineUsers } = state
   return (
     <div className={styles.online_users}>
       <div className={styles.dropDownOpener}>

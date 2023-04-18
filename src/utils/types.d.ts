@@ -6,6 +6,7 @@ interface UserTypes {
   sessionId: string
   token: string
   image: string
+  name: string
 }
 
 type OnlineUser = Omit<UserTypes, "roomNames">
@@ -36,12 +37,15 @@ interface ServerToClient {
   all_rooms: (allRooms: any[]) => void
   rooms_connected: (roomsConnected: any[]) => void
   initial_room_messages: (messages: MessageTypes[]) => void
+  room_info: (room: Pick<RoomTypes, "messages" | "roomId" | "name" | "users">) => void
+  disconnect: () => void
 }
 
 interface ClientToServer {
-  join_room: ({ username: string, userId: string, image: string, roomName: string }) => void
-  disconnected: (obj: { userId: string; username: string }) => void
+  join_room: ({ userId: string, roomName: string }) => void
+  leave_room: ({ userId: string, roomName: string }) => void
   send_message: (message: MessageTypes) => void
+  join_server: ({ username: string, userId: string, image: string }) => void
 }
 
-export { UserTypes, MessageTypes, RoomTypes, ServerToClient, ClientToServer, OnlineUser, ClientAndServerEvents }
+export { UserTypes, MessageTypes, RoomTypes, ServerToClient, ClientToServer, OnlineUser }
