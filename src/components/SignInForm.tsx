@@ -34,10 +34,11 @@ function SignInForm({ setShowSignUpPage }: Props) {
     axios
       .post("http://localhost:5000/api/sign_in", { email, password })
       .then((res) => {
-        dispatch({ type: "SIGNIN", payload: { ...res.data } })
+        dispatch({ type: "SIGN_IN", payload: { ...res.data } })
       })
       .catch((err) => {
         const Err = err.response ? err.response.data.message : err.message
+        console.log(Err)
         setErr({ showErr: true, message: Err })
       })
   }

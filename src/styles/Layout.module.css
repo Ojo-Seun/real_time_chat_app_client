@@ -13,11 +13,13 @@
   flex: 2;
   margin-bottom: 1rem;
   background-color: var(--primary1);
+  height: 100%;
 }
 
 .header {
   height: 10%;
-  background-color: var(--primary1);
+  padding-top: 1rem;
+  border-radius: 0 0 2rem 2rem;
 }
 .deskTopTopHeader {
   display: none;
@@ -133,11 +135,18 @@
   background-color: var(--primary1);
   display: flex;
   flex-direction: column;
-  top: 14vh;
+  top: 15vh;
   z-index: 2;
   padding: 1rem;
 }
-
+.roomsBoxInfo,
+.usersBoxInfo {
+  height: 90%;
+}
+.createRoomBtnWrapper {
+  height: 10%;
+  text-align: center;
+}
 .roomsBox {
   left: 0px;
 }
@@ -154,13 +163,13 @@
   background-color: var(--primary1);
   color: var(--headerTextColor);
   cursor: pointer;
+  transition: all 0.1s;
 }
 
-.rightSideBar .users,
-.leftSideBar .chatInfo {
-  padding: 1rem;
+.createRoomBtn:hover {
+  opacity: 0.5;
+  border: 2px solid var(--messageBg);
 }
-
 .dropDownOpener {
   padding: 1rem;
 }
@@ -177,12 +186,14 @@
     padding: 0.5rem 1rem;
   }
 
-  .main .header {
-    height: 10%;
+  .rightSideBar .users,
+  .leftSideBar .chatInfo {
+    padding: 1rem;
+    height: 80%;
   }
 
   .main .chatWrapper {
-    height: 90%;
+    height: 85%;
   }
 
   .main .header .toggleWrapper {
@@ -200,7 +211,7 @@
   }
 
   .deskTopTopHeader {
-    width: 60%;
+    width: 50%;
     margin: auto;
     display: flex;
     padding: 1rem;

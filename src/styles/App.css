@@ -1,7 +1,7 @@
 .App {
   width: 100vw;
   height: 100vh;
-  border-radius: 1rem;
+
   background-color: var(--primary1);
   overflow-y: scroll;
   scroll-behavior: smooth;
@@ -11,10 +11,21 @@
   display: none;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1500px) {
   .App {
     width: 1400px;
     height: 90vh;
     overflow-y: hidden;
+    border-radius: 1rem;
+  }
+}
+
+@media screen and (min-height: 1000px) {
+  .App {
+    width: 1400px;
+    height: 800px;
+    margin: auto;
+    overflow-y: hidden;
+    border-radius: 1rem;
   }
 }

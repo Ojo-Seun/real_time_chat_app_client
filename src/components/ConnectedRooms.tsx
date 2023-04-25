@@ -1,14 +1,13 @@
-import React, { memo, useContext, useEffect, useState } from "react"
+import React, { memo, useContext, useState } from "react"
 import ToggleArrow from "./ToggleArrow"
 import styles from "../styles/ConnectedRooms.module.css"
 import RoomsList from "./RoomsList"
-import { RoomTypes } from "../utils/types"
 import { Store } from "./StoreProvider"
 
 function ConnectedRooms() {
   const [openList, setOpenList] = useState(true)
-  const { state, dispatch } = useContext(Store)
-  const { leaveAroom, roomsConnected } = state
+  const { state } = useContext(Store)
+  const { leaveAroom, roomsConnected, getRoomMessages } = state
 
   return (
     <div className={styles.roomsConneted}>
@@ -17,7 +16,7 @@ function ConnectedRooms() {
         <ToggleArrow status={openList} handleClick={setOpenList} />
       </div>
       {openList && (
-        <RoomsList handleClick={leaveAroom} rooms={roomsConnected}>
+        <RoomsList disabled={false} getRoomMessages={getRoomMessages} handleClick={leaveAroom} rooms={roomsConnected}>
           Leave
         </RoomsList>
       )}

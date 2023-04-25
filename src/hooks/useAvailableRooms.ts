@@ -5,7 +5,6 @@ import { RoomTypes } from "../utils/types"
 function useAvailableRooms() {
   const { state } = useContext(Store)
   const { allRooms, roomsConnected } = state
-
   // Returns list of rooms that a user is not connectected to
 
   const filter = () => {
@@ -22,7 +21,7 @@ function useAvailableRooms() {
       }
     }
 
-    return [...rooms]
+    return rooms
   }
 
   return { filter }

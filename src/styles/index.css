@@ -31,12 +31,11 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-@media screen and (max-width: 300px) {
-  .html,
+/* @media screen and (max-width: 300px) {
+  html,
   body {
-    width: 400px;
+    width: 110vw;
     height: 100vh;
     overflow-x: scroll;
   }
-}
+} */

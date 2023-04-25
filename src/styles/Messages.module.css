@@ -1,0 +1,21 @@
+.messages {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  height: 70%;
+}
+
+.messages div :last-child {
+  transition: all 0.5s;
+  animation: renderAnimation 0.5s linear 1;
+}
+
+@keyframes renderAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

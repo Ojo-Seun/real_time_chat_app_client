@@ -2,6 +2,7 @@ import { useContext, memo } from "react"
 import { Store } from "./StoreProvider"
 import styles from "../styles/CurrentRoomUsers.module.css"
 import useIsOnline from "../hooks/useIsOnline"
+import useGetUserImage from "../hooks/useGetUserImage"
 
 interface Props {
   roomName: string
@@ -9,15 +10,16 @@ interface Props {
 
 function CurrentRoomUsers({ roomName }: Props) {
   const { state } = useContext(Store)
-  const {
-    userInfo: { userId },
-    roomsConnected,
-  } = state
+  const { userInfo, allRooms } = state
   const { isOnline } = useIsOnline()
+  const { getImg } = useGetUserImage()
+  const { userId } = userInfo
+
   // Find targeted room
-  const room = roomsConnected.find((x) => x.name === roomName)
-  // Remove user from list of users to display
+  const room = allRooms.find((x) => x.name === roomName)
+  // Remove this user from list of users to display
   const users = room ? room.users.filter((user) => user.userId !== userId) : []
+  console.log("Current room users")
 
   return (
     <>
@@ -26,7 +28,7 @@ function CurrentRoomUsers({ roomName }: Props) {
           {users?.map((user, index) => {
             return (
               <li key={user.userId}>
-                <img src={user.image} alt={user.username} width={60} height={60} />
+                <img src={getImg(user.imageName)} alt={user.username} width={60} height={60} />
                 <span id={styles.wrapper}>
                   {isOnline(user.userId) ? <span id={styles.online}>Online</span> : <span id={styles.offline}>Offline</span>}
 
@@ -41,4 +43,4 @@ function CurrentRoomUsers({ roomName }: Props) {
   )
 }
 
-export default memo(CurrentRoomUsers)
+export default CurrentRoomUsers

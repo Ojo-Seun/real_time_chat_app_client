@@ -1,22 +1,26 @@
-import React, { useEffect, useState, Suspense, lazy, useContext } from "react";
-import "./styles//App.css";
-import { RouteVariant } from "./pages/Home";
-import { Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { Store } from "./components/StoreProvider";
+import React, { Suspense, lazy } from "react"
+import "./styles//App.css"
+import { Routes, Route, useLocation } from "react-router-dom"
+import { AnimatePresence, motion } from "framer-motion"
 
-const Home = lazy(() => import("./pages/Home"));
-const Chat = lazy(() => import("./pages/Chat"));
+const Home = lazy(() => import("./pages/Home"))
+const Chat = lazy(() => import("./pages/Chat"))
+
+export const RouteVariant = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: { duration: 0.2 },
+  },
+  exit: {
+    opacity: 0,
+  },
+}
 
 function App() {
-  const [message, setMessage] = useState("Initial message");
-  const location = useLocation();
-  const { state, dispatch } = useContext(Store);
-  const { isConnected, userInfo } = state;
-
-  // const send = () => {
-  //   socket.emit("message", { sender: "", createdAt: 0, to: "", userId: "", content: "Message" });
-  // };
+  const location = useLocation()
 
   return (
     <motion.div variants={RouteVariant} initial="initial" animate="animate" exit="exit" className="App">
@@ -29,7 +33,7 @@ function App() {
         </AnimatePresence>
       </Suspense>
     </motion.div>
-  );
+  )
 }
 
-export default App;
+export default App

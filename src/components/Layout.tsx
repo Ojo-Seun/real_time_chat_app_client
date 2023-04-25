@@ -78,7 +78,8 @@ function Layout({ children }: Props) {
   const [leftToggleBtn, setLeftToggleBtn] = useState({ roomsBox: false, openBtn: true })
   const [rightToggleBtn, setRightToggleBtn] = useState({ usersBox: false, openBtn: true })
   const { state, dispatch } = useContext(Store)
-  const { isConnected, userInfo, alert, allRooms, allUsers, roomsConnected, onlineUsers } = state
+  const { isConnected, userInfo, alert, handleSignOut } = state
+  const { image } = userInfo
 
   const toggleLeftBtn = () => {
     setRightToggleBtn({ usersBox: false, openBtn: true })
@@ -114,6 +115,11 @@ function Layout({ children }: Props) {
           <ConnectedRooms />
           <AvailableRooms />
         </div>
+        <div className={styles.createRoomBtnWrapper}>
+          <button type="button" className={styles.createRoomBtn}>
+            Create New Room
+          </button>
+        </div>
       </motion.aside>
       {/*Desktop  leftSideBar*/}
       <motion.main variants={MainVariant} initial="initial" animate="animate" className={styles.main}>
@@ -142,12 +148,14 @@ function Layout({ children }: Props) {
 
           {/* Desktop-> deskTopTopHeader*/}
           <div className={styles.deskTopTopHeader}>
-            <img width={40} height={40} style={{ borderRadius: ".5rem" }} src={userInfo.image} alt="Your pics" />
+            <div>
+              <img width={40} height={40} style={{ borderRadius: ".5rem" }} src={image} alt="Your pics" />
+              <span style={{ textTransform: "capitalize", color: "white", marginLeft: 5 }}>{userInfo.name}</span>
+            </div>
             <div className={styles.isConnected}>
               <span className={`${styles.indicator} ${isConnected ? styles.active : styles.inactive}`}></span>
               <span>{isConnected ? "Online" : "Offline"}</span>
             </div>
-            <span style={{ textTransform: "capitalize", color: "white" }}>{userInfo.name}</span>
           </div>
           {/* Desktop-> deskTopTopHeader*/}
 
@@ -159,11 +167,15 @@ function Layout({ children }: Props) {
             <AnimatePresence>
               {leftToggleBtn.roomsBox && (
                 <motion.div variants={RoomsBoxVariant} initial="initial" animate="animate" exit="exit" className={styles.roomsBox}>
-                  <ConnectedRooms />
-                  <AvailableRooms />
-                  <button type="button" className={styles.createRoomBtn}>
-                    Create New Room
-                  </button>
+                  <div className={styles.roomsBoxInfo}>
+                    <ConnectedRooms />
+                    <AvailableRooms />
+                  </div>
+                  <div className={styles.createRoomBtnWrapper}>
+                    <button type="button" className={styles.createRoomBtn}>
+                      Create New Room
+                    </button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -177,8 +189,15 @@ function Layout({ children }: Props) {
             <AnimatePresence>
               {rightToggleBtn.usersBox && (
                 <motion.div variants={UsersBoxVariant} initial="initial" animate="animate" exit="exit" className={styles.usersBox}>
-                  <OnlineUsers />
-                  <OfflineUsers />
+                  <div className={styles.usersBoxInfo}>
+                    <OnlineUsers />
+                    <OfflineUsers />
+                  </div>
+                  <div className={styles.createRoomBtnWrapper}>
+                    <button type="button" onClick={handleSignOut} className={styles.createRoomBtn}>
+                      Sign Out
+                    </button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -202,6 +221,11 @@ function Layout({ children }: Props) {
         <div className={styles.users}>
           <OnlineUsers />
           <OfflineUsers />
+        </div>
+        <div className={styles.createRoomBtnWrapper}>
+          <button type="button" onClick={handleSignOut} className={styles.createRoomBtn}>
+            Sign Out
+          </button>
         </div>
       </motion.aside>
       {/* Desktop rightSideBar*/}

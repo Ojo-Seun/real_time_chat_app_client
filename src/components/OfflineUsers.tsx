@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { memo, useState } from "react"
 import styles from "../styles/OfflineUsers.module.css"
 import ToggleArrow from "./ToggleArrow"
 import UsersList from "./UsersLIst"

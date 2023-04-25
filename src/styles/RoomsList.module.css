@@ -10,7 +10,6 @@
   justify-content: space-between;
   align-items: center;
   overflow: visible;
-  position: relative;
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: var(--primary2);
@@ -26,19 +25,37 @@
   margin-left: 5px;
 }
 
-.rooms li button {
+#btn1 {
   outline: none;
   padding: 0.5rem;
   border: 5px solid var(--messageBg);
   background-color: var(--primary1);
   border-radius: 1rem;
-  color: var(--headerColor);
+  color: var(--headerTextColor);
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.rooms li button:hover {
+#btn1:hover {
   opacity: 0.5;
+}
+#chats {
+  position: relative;
+  overflow: visible;
+}
+
+#chats button {
+  outline: none;
+  padding: 0.5rem;
+  background-color: var(--primary1);
+  color: var(--headerColor);
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+#chats button:hover {
+  color: var(--activeColor);
 }
 .msgCounter {
   position: absolute;
@@ -46,10 +63,11 @@
   width: 32px;
   height: 32px;
   display: flex;
-  top: -18px;
-  right: 0px;
+  top: -22px;
+  right: -15px;
   font-size: 10px;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--primary2);
+  border: 1px solid var(--activeColor);
+  background-color: var(--primary2);
 }

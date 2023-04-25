@@ -4,10 +4,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
 }
 
 .room_users li {
   width: 110px;
+  min-width: 110px;
   height: 80%;
   border-radius: 1rem;
   display: flex;

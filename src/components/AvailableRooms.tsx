@@ -8,7 +8,7 @@ import useAvailableRooms from "../hooks/useAvailableRooms"
 
 function AvailableRooms() {
   const { state, dispatch } = useContext(Store)
-  const { joinAroom } = state
+  const { joinAroom, getRoomMessages } = state
   const [openList, setOpenList] = useState(true)
   const { filter } = useAvailableRooms()
 
@@ -19,7 +19,7 @@ function AvailableRooms() {
         <ToggleArrow status={openList} handleClick={setOpenList} />
       </div>
       {openList && (
-        <RoomsList handleClick={joinAroom} rooms={filter()}>
+        <RoomsList disabled={true} getRoomMessages={getRoomMessages} handleClick={joinAroom} rooms={filter()}>
           Join
         </RoomsList>
       )}

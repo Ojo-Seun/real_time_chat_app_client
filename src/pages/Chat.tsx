@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useContext } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import styles from "../styles/Chat.module.css"
 import Layout from "../components/Layout"
 import SendIcon from "../components/SendIcon"
 import Messages from "../components/Messages"
-import { MessageTypes, UserTypes } from "../utils/types"
+import { MessageTypes } from "../utils/types"
 import { Store } from "../components/StoreProvider"
 import { useNavigate } from "react-router-dom"
 import socket from "../utils/socket"
@@ -16,13 +16,9 @@ function Chat() {
   const [roomName, setRoomName] = useState("general")
   const [messages, setMessages] = useState<MessageTypes[]>([])
   const [message, setmessage] = useState("")
-  const messagesEndRef = useRef(null)
-
-  const {
-    state: { isConnected, userInfo, roomsConnected },
-    dispatch,
-  } = useContext(Store)
-  const { token, username, userId, image } = userInfo
+  const { state, dispatch } = useContext(Store)
+  const { isConnected, userInfo, roomsConnected } = state
+  const { token, username, userId, imageName } = userInfo
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setmessage(e.target.value)
@@ -31,9 +27,9 @@ function Chat() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!validateInput("message", message)) return
-    const _message: MessageTypes = { sender: username, userId, image, content: message, to: roomName, createdAt: Date.now() }
+    const _message: MessageTypes = { sender: username, userId, imageName, content: message, to: roomName, createdAt: Date.now() }
     setMessages([...messages, _message])
-    socket.emit("send_message", _message)
+    socket.emit("message", _message)
     setmessage("")
   }
 
@@ -46,15 +42,14 @@ function Chat() {
 
   // Make connection
   useEffect(() => {
-    console.log("connection")
-    socket.auth = { token, userId }
+    socket.auth = { token, userId, username }
     socket.connect()
-  }, [token, userId])
+  }, [token, userId, username])
 
   useEffect(() => {
     socket.on("connect_error", (err) => {
       if (err.message === "Invalid Token" || err.message === "Please Sign Up") {
-        dispatch({ type: "SIGNOUT" })
+        dispatch({ type: "SIGN_OUT" })
       }
       console.log(err.message)
     })
@@ -63,10 +58,6 @@ function Chat() {
       socket.off("connect_error")
     }
   }, [dispatch])
-
-  useEffect(() => {
-    socket.emit("join_server", { username, userId, image })
-  }, [image, username, userId])
 
   // Connection status
   useEffect(() => {
@@ -88,6 +79,19 @@ function Chat() {
     }
   }, [dispatch])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      socket.emit("join_server", { username, userId, imageName }, (roomsConnected, allUsersImages) => {
+        dispatch({ type: "ADD_IMGS", payload: allUsersImages })
+        dispatch({ type: "ROOMS_CONNECTED", payload: roomsConnected })
+      })
+    }, 1000)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [imageName, username, userId, dispatch])
+
   // Layout Componnent Events
   useEffect(() => {
     socket.on("alert", (data) => {
@@ -108,13 +112,15 @@ function Chat() {
       dispatch({ type: "ALL_ROOMS", payload: rooms })
     })
 
-    // Return list of the rooms a user is connected to
+    // Return all the rooms the user is
     socket.on("rooms_connected", (rooms) => {
       dispatch({ type: "ROOMS_CONNECTED", payload: rooms })
     })
 
-    socket.on("room_info", (room) => {
-      setMessages(room.messages)
+    // Last user the joined the room
+    socket.on("newUserImage", (e) => {
+      console.log(e)
+      dispatch({ type: "ADD_IMG", payload: e })
     })
     return () => {
       socket.off("alert", () => {
@@ -124,8 +130,7 @@ function Chat() {
       socket.off("online_users")
       socket.off("all_rooms")
       socket.off("rooms_connected")
-      socket.off("room_info")
-      socket.off("alert")
+      socket.off("newUserImage")
     }
   }, [dispatch])
 
@@ -133,26 +138,45 @@ function Chat() {
   useEffect(() => {
     const joinAroom = (roomName: string, userId: string) => {
       setRoomName(roomName)
-      socket.emit("join_room", { roomName, userId })
+      socket.emit("join_room", { roomName, userId }, (room, roomsConnected) => {
+        setMessages(room.messages)
+        dispatch({ type: "ROOMS_CONNECTED", payload: roomsConnected })
+      })
     }
 
     const leaveAroom = (roomName: string, userId: string) => {
-      socket.emit("leave_room", { roomName, userId })
+      socket.emit("leave_room", { roomName, userId }, (roomsConnected) => {
+        dispatch({ type: "ROOMS_CONNECTED", payload: roomsConnected })
+      })
+    }
+
+    const getRoomMessages = (roomName: string) => {
+      socket.emit("room_messages", roomName)
+    }
+
+    const handleSignOut = () => {
+      dispatch({ type: "SIGN_OUT" })
+      socket.disconnect()
     }
 
     dispatch({ type: "JOIN_A_ROOM", payload: joinAroom })
     dispatch({ type: "LEAVE_A_ROOM", payload: leaveAroom })
-  }, [image, userId, username, dispatch])
+    dispatch({ type: "ROOM_CHATS", payload: getRoomMessages })
+    dispatch({ type: "HANDLE_SIGN_OUT", payload: handleSignOut })
+  }, [userId, username, dispatch])
 
   useEffect(() => {
-    socket.on("recieve_message", (message) => {
+    socket.on("initial_room_messages", (messages) => {
+      setMessages(messages)
+    })
+
+    socket.on("message", (message) => {
       setMessages([...messages, message])
     })
 
     return () => {
-      socket.off("recieve_message", () => {
-        setMessages([])
-      })
+      socket.off("initial_room_messages")
+      socket.off("message")
     }
   }, [messages])
 
@@ -163,9 +187,9 @@ function Chat() {
           <div className={styles.roomUsers}>
             <CurrentRoomUsers roomName={roomName} />
           </div>
-          <div className={styles.messages}>
+          <>
             <Messages messages={messages} />
-          </div>
+          </>
           <form onSubmit={handleSubmit} className={styles.inputWrapper}>
             <input className={styles.messageInput} autoFocus={true} onChange={handleChange} type="text" placeholder="Message" value={message} name="message" />
             <button id={styles.sendBtn} disabled={!isConnected} type="submit">

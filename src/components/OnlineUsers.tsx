@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react"
+import { memo, useContext, useState } from "react"
 import styles from "../styles/OnlineUsers.module.css"
 import ToggleArrow from "./ToggleArrow"
-import { UserTypes } from "../utils/types"
 import UsersList from "./UsersLIst"
 import { Store } from "./StoreProvider"
 

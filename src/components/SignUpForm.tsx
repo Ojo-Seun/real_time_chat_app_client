@@ -21,8 +21,8 @@ const InputsVariants = {
 
 interface Props {
   setShowSignUpPage: (e: boolean) => void
-  image: string
-  setImage: (e: string) => void
+  image: { image: string; imageName: string }
+  setImage: (obj: { image: string; imageName: string }) => void
 }
 
 function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
@@ -62,11 +62,11 @@ function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
     }
 
     const { confirmPassword, ...rest } = inputs
-    const userInfo = { ...rest, username: `@${inputs.name.toLowerCase()}`, image }
+    const userInfo = { ...rest, username: `@${inputs.name.toLowerCase()}`, image: image.image, imageName: image.imageName }
     axios
       .post("http://localhost:5000/api/sign_up", { ...userInfo })
       .then((res) => {
-        dispatch({ type: "SIGNIN", payload: { ...res.data } })
+        dispatch({ type: "SIGN_IN", payload: { ...res.data } })
       })
       .catch((err) => {
         const Err = err.response ? err.response.data.message : err.message
@@ -81,7 +81,7 @@ function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
       setErr({ showErr: false, message: "" })
 
       const options = {
-        maxSizeMB: 1,
+        maxSizeMB: 0.2,
         maxWidthOrHeight: 400,
         useWebWorker: true,
       }
@@ -92,7 +92,7 @@ function SignUpForm({ setShowSignUpPage, image, setImage }: Props) {
         reader.readAsDataURL(compressedImage)
         reader.addEventListener("load", (e) => {
           const result = e.target?.result
-          setImage(result as string)
+          setImage({ image: result as string, imageName: file.name })
         })
       })
     } else {

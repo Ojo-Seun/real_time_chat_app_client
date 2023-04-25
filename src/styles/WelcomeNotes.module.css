@@ -1,0 +1,20 @@
+.welcome_notes {
+  width: 80%;
+  margin: 1rem auto;
+  color: var(--inactiveColor);
+  padding: 0.5rem;
+}
+
+.welcome_notes h4 {
+  margin: 1rem 0;
+}
+
+.welcome_notes h4 i {
+  color: var(--activeColor);
+}
+
+@media screen and (min-width: 1000px) {
+  .welcome_notes {
+    width: 60%;
+  }
+}

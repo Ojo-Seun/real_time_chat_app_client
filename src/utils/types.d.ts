@@ -3,9 +3,9 @@ interface UserTypes {
   email: string
   roomsConnected: string[]
   userId: string
-  sessionId: string
   token: string
-  image: string
+  imageName: string
+  image?: string
   name: string
 }
 
@@ -17,7 +17,7 @@ interface MessageTypes {
   to: string
   content: string
   createdAt: number
-  image: string
+  imageName: string
 }
 
 interface RoomTypes {
@@ -29,23 +29,37 @@ interface RoomTypes {
   messages: Message[]
 }
 
+interface UserStartUpData {
+  roomsConnected: Pick<RoomTypes, "messages" | "name" | "roomId" | "users">[]
+  allRooms: Pick<RoomTypes, "messages" | "name" | "roomId" | "users">[]
+  allUsers: Pick<UserTypes, "imageName", "username", "userId">[]
+  onlineUsers: OnlineUser[]
+}
+
 interface ServerToClient {
   alert: ({ message: string }) => void
-  recieve_message: (message: MessageTypes) => void
   all_users: (allUsers: Pick<UserTypes, "image", "username", "userId">[]) => void
   online_users: (users: OnlineUser[]) => void
-  all_rooms: (allRooms: any[]) => void
-  rooms_connected: (roomsConnected: any[]) => void
+  all_rooms: (allRooms: Pick<RoomTypes, "messages" | "name" | "roomId" | "users">[]) => void
+  rooms_connected: (roomsConnected: Omit<RoomTypes, "logo">[]) => void
   initial_room_messages: (messages: MessageTypes[]) => void
-  room_info: (room: Pick<RoomTypes, "messages" | "roomId" | "name" | "users">) => void
-  disconnect: () => void
+  message: (message: MessageTypes) => void
+  newUserImage: (e: { [key: string]: string }) => void
 }
 
 interface ClientToServer {
-  join_room: ({ userId: string, roomName: string }) => void
-  leave_room: ({ userId: string, roomName: string }) => void
-  send_message: (message: MessageTypes) => void
-  join_server: ({ username: string, userId: string, image: string }) => void
+  join_room: (
+    { userId: string, roomName: string },
+    cb: (room: Pick<RoomTypes, "messages" | "name" | "roomId" | "users">, roomsConnected: Pick<RoomTypes, "messages" | "name" | "roomId" | "users">[]) => void
+  ) => void
+  leave_room: ({ userId: string, roomName: string }, cb: (roomsConnected: Pick<RoomTypes, "messages" | "name" | "roomId" | "users">[]) => void) => void
+  message: (message: MessageTypes) => void
+  join_server: (
+    { username: string, userId: string, imageName: string },
+    cb: (roomsConnected: Pick<RoomTypes, "messages" | "name" | "roomId" | "users">[], allUsersImages: { [imageName: string]: string }[]) => void
+  ) => void
+  room_messages: (roomName: string) => void
+  user_image: (imageName: string, cb: ({ image: string }) => void) => void
 }
 
 export { UserTypes, MessageTypes, RoomTypes, ServerToClient, ClientToServer, OnlineUser }

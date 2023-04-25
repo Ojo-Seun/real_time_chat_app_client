@@ -1,8 +1,9 @@
-import { useContext, useEffect } from "react"
+import { useContext, memo } from "react"
 import type { OnlineUser, UserTypes } from "../utils/types"
 import { Store } from "./StoreProvider"
 import styles from "../styles/UsersList.module.css"
 import { motion, AnimatePresence } from "framer-motion"
+import useGetUserImage from "../hooks/useGetUserImage"
 
 interface Props {
   users: Partial<UserTypes>[] | OnlineUser[]
@@ -17,10 +18,10 @@ const Variant = {
 
 function UsersList({ users, BgColor }: Props) {
   const { state } = useContext(Store)
-  const { userId } = state.userInfo
-  users = users.filter((x) => x.userId !== userId)
+  const { userInfo } = state
+  const { getImg } = useGetUserImage()
 
-  useEffect(() => {}, [users])
+  users = users.filter((x) => x.userId !== userInfo.userId)
 
   return (
     <AnimatePresence>
@@ -30,7 +31,7 @@ function UsersList({ users, BgColor }: Props) {
             return (
               <li key={user.userId} style={{ backgroundColor: BgColor }}>
                 <div>
-                  <img src={user.image} alt={`${user.username} pics`} width={40} height={40} />
+                  <img src={getImg(user.imageName!)} alt={`${user.username} pics`} width={40} height={40} />
                   <span>{user.username}</span>
                 </div>
                 <button>Message</button>
@@ -42,4 +43,4 @@ function UsersList({ users, BgColor }: Props) {
   )
 }
 
-export default UsersList
+export default memo(UsersList)
